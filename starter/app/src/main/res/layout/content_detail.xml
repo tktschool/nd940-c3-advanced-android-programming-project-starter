@@ -8,4 +8,5 @@
     tools:context=".DetailActivity"
     tools:showIn="@layout/activity_detail">
 
+
 </androidx.constraintlayout.widget.ConstraintLayout>
