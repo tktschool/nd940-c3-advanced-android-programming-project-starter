@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity() {
             getString(R.string.download_notification_channel_name)
         )
 
+        //TODO Should i declare this in manifest
         registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
         custom_button = findViewById(R.id.custom_button)
 
