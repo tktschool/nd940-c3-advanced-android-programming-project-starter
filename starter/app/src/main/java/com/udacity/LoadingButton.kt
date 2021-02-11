@@ -26,49 +26,43 @@ class LoadingButton @JvmOverloads constructor(
 //    private val clipRectTop = resources.getDimension(R.dimen.clipRectTop)
 //    private val clipRectLeft = resources.getDimension(R.dimen.clipRectLeft)
 
-//    private val rectInset = resources.getDimension(R.dimen.rectInset)
+    //    private val rectInset = resources.getDimension(R.dimen.rectInset)
     private val smallRectOffset = resources.getDimension(R.dimen.smallRectOffset)
 
-    private val circleRadius = 20.0f
+    private val circleRadius = 30.0f
 
     private val valueAnimator = ValueAnimator.ofFloat(0F, 1f)
 
     private val circleDiameter = circleRadius * 2
-    private val circletSize = measuredHeight.toFloat() - paddingBottom.toFloat() - circleDiameter
 
-
-    private val rectF = RectF(
-    circleDiameter,
-    circleDiameter,
-    circletSize ,
-    circletSize
-    )
 
     private var buttonState: ButtonState by Delegates.observable<ButtonState>(ButtonState.Completed) { p, old, new ->
         when (new) {
             ButtonState.Clicked -> {
-
+                text = resources.getString(R.string.button_name)
+                loadLevel = 0f
+                valueAnimator.cancel()
             }
             ButtonState.Loading -> {
                 text = resources.getString(R.string.button_loading)
-                valueAnimator.repeatMode = ValueAnimator.REVERSE
+                valueAnimator.repeatMode = ValueAnimator.RESTART
                 valueAnimator.repeatCount = ValueAnimator.INFINITE
-                valueAnimator.duration =400L
+                valueAnimator.duration = 400L
                 //valueAnimator.disableViewDuringAnimation()
                 valueAnimator.start()
-                invalidate()
+
             }
             ButtonState.Completed -> {
                 text = resources.getString(R.string.button_name)
                 loadLevel = 0f
                 valueAnimator.cancel()
-                invalidate()
-            }
 
+            }
         }
+        invalidate()
     }
 
-    fun setState(_buttonState: ButtonState){
+    fun setState(_buttonState: ButtonState) {
         buttonState = _buttonState
     }
 
@@ -106,27 +100,50 @@ class LoadingButton @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
+        //Draw background color
         canvas?.drawColor(bgColor)
 
-        paint.getTextBounds(text, 0, text.length, textRect)
-        pointPosition.computeXYForText(textRect)
-        paint.color = Color.BLACK
-        canvas?.drawText(text, pointPosition.x, pointPosition.y, paint)
-        if(buttonState == ButtonState.Loading) {
+        //Draw circle loading and rect loading
+        if (buttonState == ButtonState.Loading) {
+            drawRectLoading(canvas)
             drawArcLoading(canvas)
         }
 
+        //Draw Text
+        drawTextLoading(canvas)
+
+    }
+
+    private fun drawTextLoading(canvas: Canvas?) {
+        paint.getTextBounds(text, 0, text.length, textRect)
+        pointPosition.computeXYForText(textRect)
+        paint.color = getColor(context, R.color.white)
+        canvas?.drawText(text, pointPosition.x, pointPosition.y, paint)
+    }
+
+    private fun drawRectLoading(canvas: Canvas?) {
+        paint.color = getColor(context, R.color.colorPrimaryDark)
+        canvas?.drawRect(
+            0f,
+            0f,
+            loadLevel * widthSize.toFloat(),
+            heightSize.toFloat(),
+            paint
+        )
     }
 
     private fun drawArcLoading(canvas: Canvas?) {
-       // canvas?.save()
-        canvas?.translate(
-            widthSize.toFloat() / 2 + textRect.width() / 2 + smallRectOffset,
-            measuredHeight.toFloat() / 2
+        paint.color = getColor(context, R.color.colorAccent)
+        val circletSize = measuredHeight.toFloat() - paddingBottom.toFloat() - circleDiameter
+        val rectF = RectF(
+            circleDiameter,
+            circleDiameter,
+            circletSize,
+            circletSize
         )
         paint.color = getColor(context, R.color.colorAccent)
-        canvas?.drawArc(rectF, 0F, 360F*loadLevel, true, paint)
-      //  canvas?.restore()
+
+        canvas?.drawArc(rectF, 0F, 360F * loadLevel, true, paint)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -142,7 +159,7 @@ class LoadingButton @JvmOverloads constructor(
         setMeasuredDimension(w, h)
     }
 
-    private fun ValueAnimator.disableViewDuringAnimation(){
+    private fun ValueAnimator.disableViewDuringAnimation() {
         addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationStart(animation: Animator?) {
                 isEnabled = false

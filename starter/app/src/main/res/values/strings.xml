@@ -11,6 +11,7 @@
     <string name="button_name">Download</string>
     <string name="button_loading">We are loading </string>
     <string name="title_activity_detail">DetailActivity</string>
+    <string name="please_select">Please select the file to download</string>
 
     <string name="download_notification_channel_id" translatable="false">download_notification_channel</string>
     <string name="download_notification_channel_name" translatable="true">Download</string>
@@ -20,4 +21,8 @@
     <string name="glide_text">Glide - Image loading Library by Bump Tech</string>
     <string name="load_app_text">LoadApp - Current repository by Udacity</string>
     <string name="retrofit_text">Retrofit - Type-safe HTTP client for Android and Java by Square, Inc.</string>
+    <string name="file_name">File name</string>
+    <string name="status">Status</string>
+    <string name="download_completed">Download completed </string>
+    <string name="download_failed">Download failed </string>
 </resources>

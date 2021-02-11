@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import androidx.core.app.NotificationCompat
+import com.udacity.DetailActivity
 import com.udacity.MainActivity
 import com.udacity.R
 
@@ -20,18 +21,19 @@ private val FLAGS = 0
  *
  * @param context, activity context.
  */
-fun NotificationManager.sendNotification(messageBody: String, applicationContext: Context) {
+fun NotificationManager.sendNotification(fileName: String, status: String, applicationContext: Context) {
 
     // Create the content intent for the notification, which launches this activity
     // create intent
-    val contentIntent = Intent(applicationContext, MainActivity::class.java)
-
+    val contentIntent = DetailActivity.starterIntent(applicationContext)
+    contentIntent.putExtra(DetailActivity.EXTRA_FILE_NAME, fileName)
+    contentIntent.putExtra(DetailActivity.EXTRA_STATUS, status)
     //  create PendingIntent
     val contentPendingIntent = PendingIntent.getActivity(
         applicationContext,
         NOTIFICATION_ID,
         contentIntent,
-        PendingIntent.FLAG_UPDATE_CURRENT
+        PendingIntent.FLAG_ONE_SHOT
     )
 
     // Build the notification
@@ -44,7 +46,7 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
             applicationContext
                 .getString(R.string.notification_title)
         )
-        .setContentText(messageBody)
+        .setContentText(applicationContext.getString(R.string.notification_description))
         //.setContentIntent(contentPendingIntent)
         //when the user taps on the notification, the notification dismisses itself
         .setAutoCancel(true)
@@ -58,3 +60,9 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
 
 
 }
+
+fun NotificationManager.cancelNotifications() {
+    cancelAll()
+}
+
+

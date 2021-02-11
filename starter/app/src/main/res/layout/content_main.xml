@@ -10,7 +10,7 @@
     tools:showIn="@layout/activity_main">
 
     <RadioGroup
-        android:id="@+id/radioGroup"
+        android:id="@+id/download_radio_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin"
@@ -22,21 +22,23 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/glide_radio_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/glide_text"
+            android:layout_marginBottom="@dimen/default_margin"
             android:textSize="@dimen/default_text_size" />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/udacity_radio_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/load_app_text"
+            android:layout_marginBottom="@dimen/default_margin"
             android:textSize="@dimen/default_text_size" />
 
         <RadioButton
-            android:id="@+id/radioButton3"
+            android:id="@+id/retrofit_radio_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/retrofit_text"
