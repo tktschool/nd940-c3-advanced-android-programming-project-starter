@@ -31,6 +31,7 @@ class LoadingButton @JvmOverloads constructor(
 
     private val circleRadius = 30.0f
 
+    //TODO  Different between ValueAnimator and ObjectAnimator
     private val valueAnimator = ValueAnimator.ofFloat(0F, 1f)
 
     private val circleDiameter = circleRadius * 2
@@ -106,11 +107,15 @@ class LoadingButton @JvmOverloads constructor(
         //Draw circle loading and rect loading
         if (buttonState == ButtonState.Loading) {
             drawRectLoading(canvas)
-            drawArcLoading(canvas)
         }
 
         //Draw Text
         drawTextLoading(canvas)
+
+            //TODO How to draw Arc on right side of Text(drawTextLoading)
+        if (buttonState == ButtonState.Loading) {
+            drawArcLoading(canvas)
+        }
 
     }
 

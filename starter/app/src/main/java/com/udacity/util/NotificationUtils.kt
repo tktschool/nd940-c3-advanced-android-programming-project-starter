@@ -21,7 +21,7 @@ private val FLAGS = 0
  *
  * @param context, activity context.
  */
-fun NotificationManager.sendNotification(fileName: String, status: String, applicationContext: Context) {
+fun NotificationManager.sendNotification(fileName: String, status: String,downloadId: Long, applicationContext: Context) {
 
     // Create the content intent for the notification, which launches this activity
     // create intent
@@ -31,12 +31,13 @@ fun NotificationManager.sendNotification(fileName: String, status: String, appli
     //  create PendingIntent
     val contentPendingIntent = PendingIntent.getActivity(
         applicationContext,
-        NOTIFICATION_ID,
+        downloadId.toInt(),
         contentIntent,
         PendingIntent.FLAG_ONE_SHOT
     )
 
     // Build the notification
+    //TODO How to to separate every notification (now it look like update current notification)
     val builder = NotificationCompat.Builder(
         applicationContext,
         applicationContext.getString(R.string.download_notification_channel_id)
@@ -50,6 +51,7 @@ fun NotificationManager.sendNotification(fileName: String, status: String, appli
         //.setContentIntent(contentPendingIntent)
         //when the user taps on the notification, the notification dismisses itself
         .setAutoCancel(true)
+        .setPriority(NotificationCompat.PRIORITY_HIGH)
         .addAction(
             R.drawable.ic_assistant_black_24dp,
             applicationContext.getString(R.string.notification_button),

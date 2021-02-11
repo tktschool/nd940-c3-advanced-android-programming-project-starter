@@ -35,7 +35,7 @@ class DetailActivity : AppCompatActivity() {
         ) as NotificationManager
 
         notificationManager.cancelNotifications()
-
+        //TODO What difference between intend , bundle , parcerable
         if (intent.hasExtra(EXTRA_FILE_NAME)) {
             filename_des_textview.text = intent.getStringExtra(EXTRA_FILE_NAME)
         }
@@ -45,6 +45,7 @@ class DetailActivity : AppCompatActivity() {
         }
 
         ok_button.setOnClickListener{
+            //TODO should i navigate back by startActivity(intent) or have better solution
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }

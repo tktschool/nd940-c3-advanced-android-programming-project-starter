@@ -96,14 +96,14 @@ class MainActivity : AppCompatActivity() {
                             if (statusDownloadManager == DownloadManager.STATUS_SUCCESSFUL) {
                                 Toast.makeText(context, getString(R.string.download_completed) + downloadID.toString(), Toast.LENGTH_LONG).show()
                                 notificationManager.sendNotification(
-                                    titleDownloadManager, "Success",
+                                    titleDownloadManager, "Success",downloadID,
                                     application
                                 )
                                 cursor.close()
                             } else {
                                 Toast.makeText(context, getString(R.string.download_failed) + downloadID.toString(), Toast.LENGTH_SHORT).show()
                                 notificationManager.sendNotification(
-                                    titleDownloadManager, "Fail",
+                                    titleDownloadManager, "Fail",downloadID,
                                     application
                                 )
                                 cursor.close()
