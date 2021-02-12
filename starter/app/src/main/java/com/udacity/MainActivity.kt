@@ -30,8 +30,6 @@ class MainActivity : AppCompatActivity() {
     private var downloadFileName: String = ""
 
     private lateinit var notificationManager: NotificationManager
-    private lateinit var pendingIntent: PendingIntent
-    private lateinit var action: NotificationCompat.Action
     lateinit var custom_button: LoadingButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +46,6 @@ class MainActivity : AppCompatActivity() {
             getString(R.string.download_notification_channel_name)
         )
 
-        //TODO Should i declare this in manifest
         registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
         custom_button = findViewById(R.id.custom_button)
 
@@ -177,5 +174,7 @@ class MainActivity : AppCompatActivity() {
 
         private const val CHANNEL_ID = "channelId"
     }
+
+
 
 }

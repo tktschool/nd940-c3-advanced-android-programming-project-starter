@@ -9,41 +9,50 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <RadioGroup
-        android:id="@+id/download_radio_group"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginEnd="@dimen/default_margin"
-        android:orientation="vertical"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/custom_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <RadioButton
-            android:id="@+id/glide_radio_button"
-            android:layout_width="wrap_content"
+        <RadioGroup
+            android:id="@+id/download_radio_group"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/glide_text"
-            android:layout_marginBottom="@dimen/default_margin"
-            android:textSize="@dimen/default_text_size" />
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/udacity_radio_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/load_app_text"
-            android:layout_marginBottom="@dimen/default_margin"
-            android:textSize="@dimen/default_text_size" />
+            <RadioButton
+                android:id="@+id/glide_radio_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:text="@string/glide_text"
+                android:textSize="@dimen/default_text_size" />
 
-        <RadioButton
-            android:id="@+id/retrofit_radio_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/retrofit_text"
-            android:textSize="@dimen/default_text_size" />
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/udacity_radio_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:text="@string/load_app_text"
+                android:textSize="@dimen/default_text_size" />
+
+            <RadioButton
+                android:id="@+id/retrofit_radio_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/retrofit_text"
+                android:textSize="@dimen/default_text_size" />
+
+        </RadioGroup>
+
+    </androidx.core.widget.NestedScrollView>
 
     <com.udacity.LoadingButton
         android:id="@+id/custom_button"

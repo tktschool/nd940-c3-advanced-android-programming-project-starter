@@ -21,20 +21,10 @@ class LoadingButton @JvmOverloads constructor(
     private val textRect = Rect()
     private var loadLevel = 0f
 
-//    private val clipRectRight = resources.getDimension(R.dimen.clipRectRight)
-//    private val clipRectBottom = resources.getDimension(R.dimen.clipRectBottom)
-//    private val clipRectTop = resources.getDimension(R.dimen.clipRectTop)
-//    private val clipRectLeft = resources.getDimension(R.dimen.clipRectLeft)
-
-    //    private val rectInset = resources.getDimension(R.dimen.rectInset)
-    private val smallRectOffset = resources.getDimension(R.dimen.smallRectOffset)
-
     private val circleRadius = 30.0f
-
-    //TODO  Different between ValueAnimator and ObjectAnimator
     private val valueAnimator = ValueAnimator.ofFloat(0F, 1f)
-
     private val circleDiameter = circleRadius * 2
+    private var rectF = RectF()
 
 
     private var buttonState: ButtonState by Delegates.observable<ButtonState>(ButtonState.Completed) { p, old, new ->
@@ -48,8 +38,8 @@ class LoadingButton @JvmOverloads constructor(
                 text = resources.getString(R.string.button_loading)
                 valueAnimator.repeatMode = ValueAnimator.RESTART
                 valueAnimator.repeatCount = ValueAnimator.INFINITE
-                valueAnimator.duration = 400L
-                //valueAnimator.disableViewDuringAnimation()
+                valueAnimator.duration = 1000L
+                valueAnimator.disableViewDuringAnimation()
                 valueAnimator.start()
 
             }
@@ -112,7 +102,6 @@ class LoadingButton @JvmOverloads constructor(
         //Draw Text
         drawTextLoading(canvas)
 
-            //TODO How to draw Arc on right side of Text(drawTextLoading)
         if (buttonState == ButtonState.Loading) {
             drawArcLoading(canvas)
         }
@@ -139,15 +128,6 @@ class LoadingButton @JvmOverloads constructor(
 
     private fun drawArcLoading(canvas: Canvas?) {
         paint.color = getColor(context, R.color.colorAccent)
-        val circletSize = measuredHeight.toFloat() - paddingBottom.toFloat() - circleDiameter
-        val rectF = RectF(
-            circleDiameter,
-            circleDiameter,
-            circletSize,
-            circletSize
-        )
-        paint.color = getColor(context, R.color.colorAccent)
-
         canvas?.drawArc(rectF, 0F, 360F * loadLevel, true, paint)
     }
 
@@ -161,6 +141,11 @@ class LoadingButton @JvmOverloads constructor(
         )
         widthSize = w
         heightSize = h
+
+        // Set circle size.
+        val circleSize = heightSize - paddingBottom - circleDiameter
+        rectF.set(circleDiameter, circleDiameter, circleSize, circleSize)
+
         setMeasuredDimension(w, h)
     }
 

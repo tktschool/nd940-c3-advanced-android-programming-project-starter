@@ -12,7 +12,7 @@ import com.udacity.R
 
 
 // Notification ID.
-private val NOTIFICATION_ID = 0
+private var NOTIFICATION_ID = 0
 private val REQUEST_CODE = 0
 private val FLAGS = 0
 
@@ -28,6 +28,7 @@ fun NotificationManager.sendNotification(fileName: String, status: String,downlo
     val contentIntent = DetailActivity.starterIntent(applicationContext)
     contentIntent.putExtra(DetailActivity.EXTRA_FILE_NAME, fileName)
     contentIntent.putExtra(DetailActivity.EXTRA_STATUS, status)
+    contentIntent.putExtra(DetailActivity.EXTRA_NOTIFICATION_ID, downloadId.toString())
     //  create PendingIntent
     val contentPendingIntent = PendingIntent.getActivity(
         applicationContext,
@@ -37,7 +38,6 @@ fun NotificationManager.sendNotification(fileName: String, status: String,downlo
     )
 
     // Build the notification
-    //TODO How to to separate every notification (now it look like update current notification)
     val builder = NotificationCompat.Builder(
         applicationContext,
         applicationContext.getString(R.string.download_notification_channel_id)
@@ -47,7 +47,7 @@ fun NotificationManager.sendNotification(fileName: String, status: String,downlo
             applicationContext
                 .getString(R.string.notification_title)
         )
-        .setContentText(applicationContext.getString(R.string.notification_description))
+        .setContentText("$fileName ${applicationContext.getString(R.string.notification_description)}")
         //.setContentIntent(contentPendingIntent)
         //when the user taps on the notification, the notification dismisses itself
         .setAutoCancel(true)
@@ -58,13 +58,9 @@ fun NotificationManager.sendNotification(fileName: String, status: String,downlo
             contentPendingIntent
         )
 
-    notify(NOTIFICATION_ID, builder.build())
+    notify(downloadId.toInt(), builder.build())
 
 
-}
-
-fun NotificationManager.cancelNotifications() {
-    cancelAll()
 }
 
 

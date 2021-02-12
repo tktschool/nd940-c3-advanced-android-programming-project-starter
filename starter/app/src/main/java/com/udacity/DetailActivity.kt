@@ -4,9 +4,9 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.udacity.util.cancelNotifications
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.content_detail.*
 
@@ -17,6 +17,7 @@ class DetailActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_FILE_NAME = "EXTRA_FILE_NAME"
         const val EXTRA_STATUS = "EXTRA_STATUS"
+        const val EXTRA_NOTIFICATION_ID = "EXTRA_NOTIFICATION_ID"
         fun starterIntent(context: Context): Intent {
             return Intent(context, DetailActivity::class.java)
         }
@@ -34,22 +35,30 @@ class DetailActivity : AppCompatActivity() {
             NotificationManager::class.java
         ) as NotificationManager
 
-        notificationManager.cancelNotifications()
-        //TODO What difference between intend , bundle , parcerable
         if (intent.hasExtra(EXTRA_FILE_NAME)) {
             filename_des_textview.text = intent.getStringExtra(EXTRA_FILE_NAME)
         }
 
         if (intent.hasExtra(EXTRA_STATUS)) {
-            status_des_textview.text= intent.getStringExtra(EXTRA_STATUS)
+            status_des_textview.text = intent.getStringExtra(EXTRA_STATUS)
+        }
+        if (intent.hasExtra(EXTRA_NOTIFICATION_ID)) {
+            Log.v("intend", EXTRA_NOTIFICATION_ID)
+            intent.getStringExtra(EXTRA_NOTIFICATION_ID)?.toIntOrNull()?.let {
+                notificationManager.cancel(it)
+            }
         }
 
-        ok_button.setOnClickListener{
-            //TODO should i navigate back by startActivity(intent) or have better solution
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+        ok_button.setOnClickListener {
+            //Fix issue after clicking on OK button
+            // Add finish() and  override fun onBackPressed(){  finish() } in this activity
+            finish()
         }
 
+    }
+
+    override fun onBackPressed() {
+        finish()
     }
 
 }
